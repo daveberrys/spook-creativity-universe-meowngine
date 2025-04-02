@@ -1,2 +1,0 @@
-Value 1 = Name
-Value 2 = Image
