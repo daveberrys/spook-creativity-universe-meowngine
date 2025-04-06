@@ -307,12 +307,6 @@ class CoolStoryState extends MusicBeatState
 			exitTween();
 		}
 
-		if (FlxG.keys.justPressed.TAB)
-		{
-			openSubState(new ShortcutMenuSubState());
-			ShortcutMenuSubState.inShortcutMenu = true;
-		}
-
 		super.update(elapsed);
 
 		grpLocks.forEach(function(lock:FlxSprite)
@@ -547,14 +541,7 @@ class CoolStoryState extends MusicBeatState
 
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
-			if (ClientPrefs.fm)
-			{
-				MusicBeatState.switchState(new CoolMenuState());
-			}
-			else
-			{
-				MusicBeatState.switchState(new MainMenuState());
-			}
+			MusicBeatState.switchState(new MainMenuState());
 		});
 	}
 }

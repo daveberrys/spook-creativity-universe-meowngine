@@ -39,8 +39,9 @@ class ClientPrefs
 	public static var splashAlpha:Float = 0.6;
 
 	// UE
-	public static var universeEngineCPREF:Bool = true; // this is to check if you running universe engine!
-	public static var keystrokes:Bool = true;
+	//public static var universeEngineCPREF:Bool = true; // this is to check if you running universe engine!
+	public static var cm:Bool = false;
+	/*public static var keystrokes:Bool = true;
 	public static var keyA:Float = 0.3;
 	public static var keyFT:Float = 0.15;
 	public static var keyXPos:Int = 90;
@@ -59,7 +60,6 @@ class ClientPrefs
 	public static var snm:Bool = false;
 	public static var tng:Bool = true;
 	public static var ib:Bool = true;
-	public static var cm:Bool = false;
 	public static var huet:Bool = false;
 	public static var css:String = 'GF Sounds';
 	public static var dcm:Bool = false;
@@ -76,7 +76,7 @@ class ClientPrefs
 	public static var moveCreditMods:Bool = false;
 
 	// offical launcherl mao
-	public static var officialLauncher:Bool = true;
+	public static var officialLauncher:Bool = true;*/
 
 	public static var sillyBob:Bool = true;
 
@@ -163,7 +163,9 @@ class ClientPrefs
 	public static function saveSettings()
 	{
 		// UE
-		FlxG.save.data.keystrokes = keystrokes;
+		FlxG.save.data.cm = cm;
+		FlxG.save.data.windowColor = windowColor;
+		/*FlxG.save.data.keystrokes = keystrokes;
 		FlxG.save.data.keyA = keyA;
 		FlxG.save.data.keyFT = keyFT;
 		FlxG.save.data.keyXPos = keyXPos;
@@ -182,7 +184,6 @@ class ClientPrefs
 		FlxG.save.data.snm = snm;
 		FlxG.save.data.tng = tng;
 		FlxG.save.data.ib = ib;
-		FlxG.save.data.cm = cm;
 		FlxG.save.data.huet = huet;
 		FlxG.save.data.css = css;
 		FlxG.save.data.dcm = dcm;
@@ -196,11 +197,9 @@ class ClientPrefs
 		FlxG.save.data.fm = fm;
 		FlxG.save.data.disable2ndpage = disable2ndpage;
 		FlxG.save.data.hideOriCredits = hideOriCredits;
-		FlxG.save.data.moveCreditMods = moveCreditMods;
+		FlxG.save.data.moveCreditMods = moveCreditMods;*/
 
-		FlxG.save.data.windowColor = windowColor;
-
-		FlxG.save.data.officialLauncher = officialLauncher;
+		//FlxG.save.data.officialLauncher = officialLauncher;
 
 		FlxG.save.data.arrowRGB = arrowRGB;
 		FlxG.save.data.arrowRGBPixel = arrowRGBPixel;
@@ -245,7 +244,7 @@ class ClientPrefs
 		FlxG.save.flush();
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls_v2', 'universe'); // Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
+		save.bind('controls_v2', 'spook'); // Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		save.data.customControls = keyBinds;
 		save.flush();
 		FlxG.log.add("Settings saved!");
@@ -254,7 +253,11 @@ class ClientPrefs
 	public static function loadPrefs()
 	{
 		// UE
-		if (FlxG.save.data.keystrokes != null)
+		if (FlxG.save.data.cm != null)
+			cm = FlxG.save.data.cm;
+		if (FlxG.save.data.windowColor != null)
+			windowColor = FlxG.save.data.windowColor;
+		/*if (FlxG.save.data.keystrokes != null)
 			keystrokes = FlxG.save.data.keystrokes;
 		if (FlxG.save.data.keyA != null)
 			keyA = FlxG.save.data.keyA;
@@ -292,8 +295,6 @@ class ClientPrefs
 			tng = FlxG.save.data.tng;
 		if (FlxG.save.data.ib != null)
 			ib = FlxG.save.data.ib;
-		if (FlxG.save.data.cm != null)
-			cm = FlxG.save.data.cm;
 		if (FlxG.save.data.huet != null)
 			huet = FlxG.save.data.huet;
 		if (FlxG.save.data.css != null)
@@ -323,9 +324,7 @@ class ClientPrefs
 		if (FlxG.save.data.moveCreditMods != null)
 			moveCreditMods = FlxG.save.data.moveCreditMods;
 		if (FlxG.save.data.officialLauncher != null)
-			officialLauncher = FlxG.save.data.officialLauncher;
-		if (FlxG.save.data.windowColor != null)
-			windowColor = FlxG.save.data.windowColor;
+			officialLauncher = FlxG.save.data.officialLauncher;*/
 
 		// Normal Psych Stuff
 		if (FlxG.save.data.arrowRGB != null)
@@ -498,7 +497,7 @@ class ClientPrefs
 			comboStacking = FlxG.save.data.comboStacking;
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls_v2', 'universe');
+		save.bind('controls_v2', 'spook');
 		if (save != null && save.data.customControls != null)
 		{
 			var loadedControls:Map<String, Array<FlxKey>> = save.data.customControls;

@@ -81,7 +81,7 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
 				{
-					FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+					FlxG.sound.playMusic(Paths.music("freakyMenu"));
 					close();
 				}
 			});
@@ -101,7 +101,7 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 			{
 				case 'Title Screen':
 					FlxG.switchState(new TitleState());
-					FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+					FlxG.sound.playMusic(Paths.music("freakyMenu"));
 					inShortcutMenu = false;
 				case 'Menus':
 					menuItems = menuItemsMenu;
@@ -113,24 +113,17 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 					menuItems = menuItemsOptions;
 					regenMenu();
 			}
-			
+
 			if (menuItems == menuItemsSongs)
 			{
 				switch (daSelected)
 				{
 					case 'Story Mode':
-						if (ClientPrefs.fm)
-						{
-							FlxG.switchState(new CoolStoryState());
-						}
-						else
-						{
-							FlxG.switchState(new StoryMenuState());
-						}
+						FlxG.switchState(new StoryMenuState());
 						inShortcutMenu = false;
 					case 'Freeplay':
 						FlxG.switchState(new FreeplayState());
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+						FlxG.sound.playMusic(Paths.music("freakyMenu"));
 						inShortcutMenu = false;
 					case 'Back':
 						menuItems = menuItemsOG;
@@ -142,19 +135,12 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 				switch (daSelected)
 				{
 					case 'Main Menu':
-						if (ClientPrefs.fm)
-						{
-							MusicBeatState.switchState(new CoolMenuState());
-						}
-						else
-						{
-							MusicBeatState.switchState(new MainMenuState());
-						}
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+						MusicBeatState.switchState(new MainMenuState());
+						FlxG.sound.playMusic(Paths.music("freakyMenu"));
 						inShortcutMenu = false;
 					case 'Mods Menu':
 						FlxG.switchState(new ModsMenuState());
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+						FlxG.sound.playMusic(Paths.music("freakyMenu"));
 						inShortcutMenu = false;
 					case 'Back':
 						menuItems = menuItemsOG;

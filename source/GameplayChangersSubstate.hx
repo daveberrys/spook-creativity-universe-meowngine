@@ -484,10 +484,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			{
 				item.alpha = 1;
 			}
-			if (ClientPrefs.fm && item.targetY != 0)
-			{
-				item.targetX -= Std.int(Math.abs(item.targetY) * 10);
-			}
 		}
 		for (text in grpTexts)
 		{

@@ -130,53 +130,16 @@ class FreeplayState extends MusicBeatState
 				}
 		}*/
 
-		if (ClientPrefs.darkmode)
-		{
-			bg = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
-			bg.screenCenter();
-		}
-		else
-		{
-			bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
-			bg.screenCenter();
-		}
+		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		add(bg);
+		bg.screenCenter();
 
 		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
 		grid.velocity.set(40, 20);
 		grid.alpha = 0;
 		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
 		add(grid);
-
-		if (ClientPrefs.mmm == "Normal Collections")
-		{
-			var square1:FlxBackdrop = new FlxBackdrop(Paths.image("title/SQUARE"));
-			square1.alpha = 0.5;
-			square1.velocity.set(0, 50);
-			add(square1);
-
-			var square2:FlxBackdrop = new FlxBackdrop(Paths.image("title/SQUARE"));
-			square2.angle = 180;
-			square2.alpha = 0.5;
-			square2.velocity.set(0, -50);
-			add(square2);
-
-			var bgoverlay:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('overlay', "preload"));
-			bgoverlay.alpha = 0.5;
-			bgoverlay.antialiasing = ClientPrefs.globalAntialiasing;
-			bgoverlay.screenCenter();
-			bgoverlay.x = bgoverlay.x - 250;
-			add(bgoverlay);
-
-			var bgoverlay2:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('overlay', "preload"));
-			bgoverlay2.alpha = 0.5;
-			bgoverlay2.antialiasing = ClientPrefs.globalAntialiasing;
-			bgoverlay2.screenCenter();
-			add(bgoverlay2);
-		}
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
@@ -189,10 +152,6 @@ class FreeplayState extends MusicBeatState
 			songText.isMenuItem = true;
 			songText.targetY = i - curSelected;
 			songText.targetX = i + curSelected;
-			if (ClientPrefs.fm)
-			{
-				songText.x = 320;
-			}
 			grpSongs.add(songText);
 
 			var maxWidth = 980;
@@ -221,33 +180,14 @@ class FreeplayState extends MusicBeatState
 		}
 		WeekData.setDirectoryFromWeek();
 
-		if (ClientPrefs.mmm != "Normal Collections")
-		{
-			scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
-			scoreText.setFormat(Paths.font("funkin.ttf"), 32, FlxColor.WHITE, RIGHT);
+		scoreText = new FlxText(1280 / 2 + theXthinglmao, 720 / 2 - theYthinglmao, 0, "SCORE: 0\nMISSES: 0\nRATING: 0.00%", 20);
+		scoreText.setFormat(Paths.font("funkin.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 
-			scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0xFF000000);
-			scoreBG.alpha = 0.6;
-			add(scoreBG);
-		}
-		else
-		{
-			scoreText = new FlxText(1280 / 2 + theXthinglmao, 720 / 2 - theYthinglmao, 0, "SCORE: 0\nMISSES: 0\nRATING: 0.00%", 20);
-			scoreText.setFormat(Paths.font("funkin.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0xFF000000);
+		scoreBG.alpha = 0;
+		add(scoreBG);
 
-			scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0xFF000000);
-			scoreBG.alpha = 0;
-			add(scoreBG);
-		}
-
-		if (ClientPrefs.mmm == "Normal Collections")
-		{
-			diffText = new FlxText(scoreText.x, scoreText.y + 70, 0, "", 24);
-		}
-		else
-		{
-			diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
-		}
+		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
 		diffText.font = scoreText.font;
 		add(diffText);
 
@@ -532,14 +472,7 @@ class FreeplayState extends MusicBeatState
 			bg.color = 0xFFfd719b;
 		}
 
-		if (ClientPrefs.mmm == "Normal Collections")
-		{
-			scoreText.text = 'SCORE: ' + lerpScore + '\nMISSES: ' + lerpMisses + '\nRATING: ' + ratingSplit.join('.') + '%';
-		}
-		else
-		{
-			scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + ratingSplit.join('.') + '%)';
-		}
+		scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + ratingSplit.join('.') + '%)';
 		positionHighscore();
 
 		var upP = controls.UI_UP_P;
@@ -597,12 +530,6 @@ class FreeplayState extends MusicBeatState
 				}
 			}
 
-			if (FlxG.keys.justPressed.TAB)
-			{
-				openSubState(new ShortcutMenuSubState());
-				ShortcutMenuSubState.inShortcutMenu = true;
-			}
-
 			if (controls.UI_LEFT_P)
 				changeDiff(-1);
 			else if (controls.UI_RIGHT_P)
@@ -618,14 +545,7 @@ class FreeplayState extends MusicBeatState
 					colorTween.cancel();
 				}
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				if (ClientPrefs.fm)
-				{
-					MusicBeatState.switchState(new CoolMenuState());
-				}
-				else
-				{
-					MusicBeatState.switchState(new MainMenuState());
-				}
+				MusicBeatState.switchState(new MainMenuState());
 			}
 
 			if (ctrl && !ShortcutMenuSubState.inShortcutMenu)
@@ -825,10 +745,6 @@ class FreeplayState extends MusicBeatState
 				item.alpha = 1;
 				// item.setGraphicSize(Std.int(item.width));
 			}
-			if (ClientPrefs.fm && item.targetY != 0)
-			{
-				item.targetX -= Std.int(Math.abs(item.targetY) * 10);
-			}
 		}
 
 		Paths.currentModDirectory = songs[curSelected].folder;
@@ -879,15 +795,12 @@ class FreeplayState extends MusicBeatState
 
 	private function positionHighscore()
 	{
-		if (ClientPrefs.mmm != "Normal Collections")
-		{
-			scoreText.x = FlxG.width - scoreText.width - 6;
+		scoreText.x = FlxG.width - scoreText.width - 6;
 
-			scoreBG.scale.x = FlxG.width - scoreText.x + 6;
-			scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
-			diffText.x = Std.int(scoreBG.x + (scoreBG.width / 2));
-			diffText.x -= diffText.width / 2;
-		}
+		scoreBG.scale.x = FlxG.width - scoreText.x + 6;
+		scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
+		diffText.x = Std.int(scoreBG.x + (scoreBG.width / 2));
+		diffText.x -= diffText.width / 2;
 	}
 }
 

@@ -288,20 +288,7 @@ class StoryMenuState extends MusicBeatState
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			movedBack = true;
-			if (ClientPrefs.fm)
-			{
-				MusicBeatState.switchState(new CoolMenuState());
-			}
-			else
-			{
-				MusicBeatState.switchState(new MainMenuState());
-			}
-		}
-
-		if (FlxG.keys.justPressed.TAB)
-		{
-			openSubState(new ShortcutMenuSubState());
-			ShortcutMenuSubState.inShortcutMenu = true;
+			MusicBeatState.switchState(new MainMenuState());
 		}
 
 		super.update(elapsed);

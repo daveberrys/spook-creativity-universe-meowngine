@@ -46,22 +46,10 @@ class MasterEditorMenu extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Editors Main Menu", null);
 		#end
-
-		if (ClientPrefs.darkmode)
-		{
-			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
-			bg.color = 0xFF353535;
-			bg.scrollFactor.set();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
-		}
-		else
-		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-			bg.scrollFactor.set();
-			bg.color = 0xFF353535;
-			add(bg);
-		}
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg.scrollFactor.set();
+		bg.color = 0xFF353535;
+		add(bg);
 
 		grpTexts = new FlxTypedGroup<Alphabet>();
 		add(grpTexts);
@@ -124,14 +112,7 @@ class MasterEditorMenu extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			if (ClientPrefs.fm)
-			{
-				MusicBeatState.switchState(new CoolMenuState());
-			}
-			else
-			{
-				MusicBeatState.switchState(new MainMenuState());
-			}
+			MusicBeatState.switchState(new MainMenuState());
 		}
 
 		if (controls.ACCEPT)
@@ -173,10 +154,6 @@ class MasterEditorMenu extends MusicBeatState
 			{
 				item.alpha = 1;
 				// item.setGraphicSize(Std.int(item.width));
-			}
-			if (ClientPrefs.fm && item.targetY != 0)
-			{
-				item.targetX -= Std.int(Math.abs(item.targetY) * 20);
 			}
 		}
 		super.update(elapsed);

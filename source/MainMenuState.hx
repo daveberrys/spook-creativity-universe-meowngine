@@ -49,10 +49,7 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
-		if (ClientPrefs.moveCreditMods)
-			optionShit = ['story_mode', 'freeplay', 'options'];
-		else
-			optionShit = ['story_mode', 'freeplay', 'mods', 'credits', 'options'];
+		optionShit = ['story_mode', 'freeplay', 'mods', 'credits', 'options'];
 
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
@@ -72,7 +69,7 @@ class MainMenuState extends MusicBeatState
 
 		if (FlxG.sound.music == null)
 		{
-			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0.7);
+			FlxG.sound.playMusic(Paths.music("freakyMenu"), 0.7);
 		}
 
 		camGame = new FlxCamera();
@@ -90,18 +87,7 @@ class MainMenuState extends MusicBeatState
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
 
-		if (ClientPrefs.darkmode)
-		{
-			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
-			bg.color = 0xFFFDE871;
-			bg.scrollFactor.set(0, yScroll);
-			bg.setGraphicSize(Std.int(bg.width * 1.175));
-			bg.updateHitbox();
-			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
-		}
-		else if (ClientPrefs.cm)
+		if (ClientPrefs.cm)
 		{
 			var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 			bg.scrollFactor.set(0, yScroll);
@@ -128,30 +114,15 @@ class MainMenuState extends MusicBeatState
 		add(camFollow);
 		add(camFollowPos);
 
-		if (ClientPrefs.darkmode)
-		{
-			magenta = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
-			magenta.scrollFactor.set(0, yScroll);
-			magenta.setGraphicSize(Std.int(magenta.width * 1.175));
-			magenta.updateHitbox();
-			magenta.screenCenter();
-			magenta.visible = false;
-			magenta.antialiasing = ClientPrefs.globalAntialiasing;
-			magenta.color = 0xFFfd719b;
-			add(magenta);
-		}
-		else
-		{
-			magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-			magenta.scrollFactor.set(0, yScroll);
-			magenta.setGraphicSize(Std.int(magenta.width * 1.175));
-			magenta.updateHitbox();
-			magenta.screenCenter();
-			magenta.visible = false;
-			magenta.antialiasing = ClientPrefs.globalAntialiasing;
-			magenta.color = 0xFFfd719b;
-			add(magenta);
-		}
+		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+		magenta.scrollFactor.set(0, yScroll);
+		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
+		magenta.updateHitbox();
+		magenta.screenCenter();
+		magenta.visible = false;
+		magenta.antialiasing = ClientPrefs.globalAntialiasing;
+		magenta.color = 0xFFfd719b;
+		add(magenta);
 
 		// magenta.scrollFactor.set();
 
@@ -204,23 +175,13 @@ class MainMenuState extends MusicBeatState
 		textBG.scrollFactor.set();
 		textBG.alpha = 0.6;
 		add(textBG);
-		var leText:String = "Press TAB to open the shortcut menu / Press RESET to restart the game";
+		var leText:String = "Press RESET to restart the game";
 		var size:Int = 18;
 		var text:FlxText = new FlxText(0, textBG.y + 4, FlxG.width, leText, size);
 		text.screenCenter(X);
 		text.setFormat(Paths.font("funkin.ttf"), size, FlxColor.WHITE, CENTER);
 		text.scrollFactor.set();
 		add(text);
-
-		arrow = new FlxSprite(FlxG.width / 2 + 157 + 300, 0).loadGraphic(Paths.image('noteupthingg'));
-		arrow.screenCenter(Y);
-		arrow.angle = 90;
-		arrow.scale.set(0.75, 0.75);
-		arrow.antialiasing = ClientPrefs.globalAntialiasing;
-		arrow.scrollFactor.set();
-		add(arrow);
-		if (ClientPrefs.disable2ndpage)
-			arrow.alpha = 0;
 
 		// NG.core.calls.event.logEvent('swag').send();
 
@@ -281,14 +242,6 @@ class MainMenuState extends MusicBeatState
 					FreeplayState.vocals = null;
 				}
 				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
-			}
-
-			if (!ClientPrefs.disable2ndpage)
-			{
-				if (controls.UI_RIGHT_P)
-				{
-					MusicBeatState.switchState(new MainMenuUselessState());
-				}
 			}
 
 			var shiftMult:Int = 1;
@@ -380,12 +333,6 @@ class MainMenuState extends MusicBeatState
 				MusicBeatState.switchState(new MasterEditorMenu());
 			}
 			#end
-
-			if (FlxG.keys.justPressed.TAB)
-			{
-				openSubState(new ShortcutMenuSubState());
-				ShortcutMenuSubState.inShortcutMenu = true;
-			}
 		}
 
 		super.update(elapsed);

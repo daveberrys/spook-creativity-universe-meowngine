@@ -71,22 +71,11 @@ class NotesSubState extends MusicBeatSubstate
 		DiscordClient.changePresence("Note Colors Menu", null);
 		#end
 
-		if (ClientPrefs.darkmode)
-		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("aboutMenu", "preload"));
-			bg.color = 0xFFea71fd;
-			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
-		}
-		else
-		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-			bg.color = 0xFFea71fd;
-			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
-		}
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg.color = 0xFFea71fd;
+		bg.screenCenter();
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		add(bg);
 
 		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
 		grid.velocity.set(40, 40);

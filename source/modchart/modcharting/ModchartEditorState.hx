@@ -495,23 +495,12 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		opponentMode = (ClientPrefs.getGameplaySetting('opponent') && !PlayState.SONG.blockOpponentMode);
 		CoolUtil.opponentModeActive = opponentMode;
 		#end
-
-		if (ClientPrefs.darkmode)
-		{
-			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
-			bg.alpha = 0.25;
-			bg.scrollFactor.set();
-			bg.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
-			add(bg);
-		}
-		else
-		{
-			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('menuDesat'));
-			bg.alpha = 0.25;
-			bg.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
-		}
+		
+		var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('menuDesat'));
+		bg.alpha = 0.25;
+		bg.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		add(bg);
 
 		#if PSYCH
 		if (PlayState.isPixelStage) // Skew Kills Pixel Notes (How are you going to stretch already pixelated bit by bit notes?)

@@ -69,21 +69,10 @@ class EditorPlayState extends MusicBeatState
 	{
 		instance = this;
 
-		if (ClientPrefs.darkmode)
-		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("aboutMenu", "preload"));
-			bg.color = 0xff7d7d7d;
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
-			bg.screenCenter();
-		}
-		else
-		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
-			bg.screenCenter();
-		}
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		add(bg);
+		bg.screenCenter();
 
 		keysArray = [
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_left')),

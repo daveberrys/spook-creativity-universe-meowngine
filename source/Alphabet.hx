@@ -399,14 +399,9 @@ class AlphaCharacter extends FlxSprite
 	{
 		super(x, y);
 		this.parent = parent;
-		if (!ClientPrefs.darkmode)
-		{
-			image = 'alphabet';
-		}
-		else
-		{
-			image = 'alphabet2';
-		}
+
+		image = 'alphabet';
+		
 		antialiasing = ClientPrefs.globalAntialiasing;
 
 		var curLetter:Letter = allLetters.get('?');

@@ -68,15 +68,8 @@ class GitarooPause extends MusicBeatState
 				PlayState.seenCutscene = false;
 				PlayState.deathCounter = 0;
 				PlayState.cpuControlled = false;
-				if (ClientPrefs.fm)
-				{
-					MusicBeatState.switchState(new CoolMenuState());
-				}
-				else
-				{
-					MusicBeatState.switchState(new MainMenuState());
-				}
-				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+				MusicBeatState.switchState(new MainMenuState());
+				FlxG.sound.playMusic(Paths.music("freakyMenu"));
 			}
 		}
 

@@ -78,18 +78,9 @@ class ModsMenuState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
-		if (ClientPrefs.darkmode)
-		{
-			bg = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
-		}
-		else
-		{
-			bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
-		}
+		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		add(bg);
 
 		noModsTxt = new FlxText(0, 0, FlxG.width, "NO MODS INSTALLED\nPRESS BACK TO EXIT AND INSTALL A MOD", 48);
 		if (FlxG.random.bool(0.1))
@@ -515,12 +506,7 @@ class ModsMenuState extends MusicBeatState
 			}
 			else
 			{
-				if (ClientPrefs.moveCreditMods)
-					MusicBeatState.switchState(new options.SelectThing());
-				else if (ClientPrefs.fm)
-					MusicBeatState.switchState(new CoolMenuState());
-				else
-					MusicBeatState.switchState(new MainMenuState());
+				MusicBeatState.switchState(new MainMenuState());
 			}
 		}
 

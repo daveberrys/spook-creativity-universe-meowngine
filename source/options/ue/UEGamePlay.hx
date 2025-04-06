@@ -111,7 +111,7 @@ class UEGamePlay extends BaseOptionsMenu
 	override function destroy()
 	{
 		if (changedMusic)
-			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+			FlxG.sound.playMusic(Paths.music("freakyMenu"));
 		super.destroy();
 	}
 
@@ -133,13 +133,8 @@ class UEGamePlay extends BaseOptionsMenu
 		}
 	}
 
-	function onChangeHitSound()
-	{
-		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
-	}
-
 	function onChangeHitsoundVolume()
 	{
-		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound("hitsound"), ClientPrefs.hitsoundVolume);
 	}
 }

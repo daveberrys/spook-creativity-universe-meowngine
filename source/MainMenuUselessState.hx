@@ -36,6 +36,7 @@ class MainMenuUselessState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
+
 	public var arrow:FlxSprite;
 
 	var optionShit:Array<String> = [#if ACHIEVEMENTS_ALLOWED 'awards', #end#if !switch 'donate', #end];
@@ -66,7 +67,7 @@ class MainMenuUselessState extends MusicBeatState
 
 		if (FlxG.sound.music == null)
 		{
-			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0.7);
+			FlxG.sound.playMusic(Paths.music("freakyMenu"), 0.7);
 		}
 
 		camGame = new FlxCamera();
@@ -84,18 +85,7 @@ class MainMenuUselessState extends MusicBeatState
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
 
-		if (ClientPrefs.darkmode)
-		{
-			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
-			bg.color = 0xFFFDE871;
-			bg.scrollFactor.set(0, yScroll);
-			bg.setGraphicSize(Std.int(bg.width * 1.175));
-			bg.updateHitbox();
-			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
-		}
-		else if (ClientPrefs.cm)
+		if (ClientPrefs.cm)
 		{
 			var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 			bg.scrollFactor.set(0, yScroll);
@@ -122,30 +112,15 @@ class MainMenuUselessState extends MusicBeatState
 		add(camFollow);
 		add(camFollowPos);
 
-		if (ClientPrefs.darkmode)
-		{
-			magenta = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
-			magenta.scrollFactor.set(0, yScroll);
-			magenta.setGraphicSize(Std.int(magenta.width * 1.175));
-			magenta.updateHitbox();
-			magenta.screenCenter();
-			magenta.visible = false;
-			magenta.antialiasing = ClientPrefs.globalAntialiasing;
-			magenta.color = 0xFFfd719b;
-			add(magenta);
-		}
-		else
-		{
-			magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-			magenta.scrollFactor.set(0, yScroll);
-			magenta.setGraphicSize(Std.int(magenta.width * 1.175));
-			magenta.updateHitbox();
-			magenta.screenCenter();
-			magenta.visible = false;
-			magenta.antialiasing = ClientPrefs.globalAntialiasing;
-			magenta.color = 0xFFfd719b;
-			add(magenta);
-		}
+		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+		magenta.scrollFactor.set(0, yScroll);
+		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
+		magenta.updateHitbox();
+		magenta.screenCenter();
+		magenta.visible = false;
+		magenta.antialiasing = ClientPrefs.globalAntialiasing;
+		magenta.color = 0xFFfd719b;
+		add(magenta);
 
 		// magenta.scrollFactor.set();
 
@@ -210,7 +185,7 @@ class MainMenuUselessState extends MusicBeatState
 		arrow = new FlxSprite(FlxG.width / 2 + 157 - 760, 0).loadGraphic(Paths.image('noteupthingg'));
 		arrow.screenCenter(Y);
 		arrow.angle = -90;
-		arrow.scale.set(0.75,0.75);
+		arrow.scale.set(0.75, 0.75);
 		arrow.antialiasing = ClientPrefs.globalAntialiasing;
 		arrow.scrollFactor.set();
 		add(arrow);
@@ -288,7 +263,7 @@ class MainMenuUselessState extends MusicBeatState
 			if (controls.UI_LEFT_P)
 			{
 				MusicBeatState.switchState(new MainMenuState());
-				//MusicBeatState.switchState(new CustomFadeTransition(), true);
+				// MusicBeatState.switchState(new CustomFadeTransition(), true);
 			}
 
 			if (controls.UI_UP_P)

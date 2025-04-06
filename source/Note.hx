@@ -362,8 +362,6 @@ class Note extends FlxSkewedSprite
 
 		if (isSustainNote && prevNote != null)
 		{
-			alpha = (ClientPrefs.longnotet);
-			multAlpha = (ClientPrefs.longnotet);
 			hitsoundDisabled = true;
 			if (ClientPrefs.downScroll)
 				flipY = true;

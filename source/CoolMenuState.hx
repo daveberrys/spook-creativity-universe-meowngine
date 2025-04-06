@@ -93,7 +93,7 @@ class CoolMenuState extends MusicBeatState
 
 		if (FlxG.sound.music == null)
 		{
-			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0.7);
+			FlxG.sound.playMusic(Paths.music("freakyMenu"), 0.7);
 		}
 
 		ShortcutMenuSubState.inShortcutMenu = false;
@@ -272,11 +272,6 @@ class CoolMenuState extends MusicBeatState
 				MusicBeatState.switchState(new TitleState());
 			}
 
-			if (FlxG.keys.justPressed.TAB)
-			{
-				openSubState(new ShortcutMenuSubState());
-				ShortcutMenuSubState.inShortcutMenu = true;
-			}
 			#if desktop
 			else if (FlxG.keys.anyJustPressed(debugKeys))
 			{

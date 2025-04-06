@@ -496,7 +496,7 @@ class WeekEditorState extends MusicBeatState
 			if (FlxG.keys.justPressed.ESCAPE)
 			{
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+				FlxG.sound.playMusic(Paths.music("freakyMenu"));
 			}
 		}
 
@@ -655,14 +655,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 
 	override function create()
 	{
-		if (ClientPrefs.darkmode)
-		{
-			bg = new FlxSprite().loadGraphic(Paths.image("aboutMenu", "preload"));
-		}
-		else
-		{
-			bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		}
+		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		bg.color = FlxColor.WHITE;
@@ -903,7 +896,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 			if (FlxG.keys.justPressed.ESCAPE)
 			{
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+				FlxG.sound.playMusic(Paths.music("freakyMenu"));
 			}
 
 			if (controls.UI_UP_P)

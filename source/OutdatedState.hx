@@ -80,14 +80,7 @@ class OutdatedState extends MusicBeatState
 				FlxTween.tween(warnText, {alpha: 0}, 1, {
 					onComplete: function(twn:FlxTween)
 					{
-						if (ClientPrefs.fm)
-						{
-							MusicBeatState.switchState(new CoolMenuState());
-						}
-						else
-						{
-							MusicBeatState.switchState(new MainMenuState());
-						}
+						MusicBeatState.switchState(new MainMenuState());
 					}
 				});
 			}

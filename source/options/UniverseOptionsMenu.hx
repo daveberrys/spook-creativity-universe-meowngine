@@ -29,7 +29,8 @@ using StringTools;
 
 class UniverseOptionsMenu extends MusicBeatState
 {
-	var options:Array<String> = ['HUD', 'Gameplay', 'Game Options', 'Window Color'];
+	//var options:Array<String> = ['HUD', 'Gameplay', 'Game Options', 'Window Color'];
+	var options:Array<String> = ['Window Color'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 
 	private static var curSelected:Int = 0;
@@ -39,12 +40,12 @@ class UniverseOptionsMenu extends MusicBeatState
 	{
 		switch (label)
 		{
-			case 'HUD':
-				openSubState(new options.ue.UEHud());
-			case 'Gameplay':
-				openSubState(new options.ue.UEGamePlay());
-			case 'Game Options':
-				openSubState(new options.ue.UEGameOptions());
+			/*case 'HUD':
+					openSubState(new options.ue.UEHud());
+				case 'Gameplay':
+					openSubState(new options.ue.UEGamePlay());
+				case 'Game Options':
+					openSubState(new options.ue.UEGameOptions()); */
 			case 'Window Color':
 				openSubState(new options.ue.WindowsColor());
 		}
@@ -60,36 +61,18 @@ class UniverseOptionsMenu extends MusicBeatState
 
 		DiscordClient.changePresence("Selecting options category", null);
 
-		if (ClientPrefs.darkmode)
-		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("aboutMenu", "preload"));
-			bg.color = 0xFFea71fd;
-			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			bg.updateHitbox();
-			add(bg);
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg.color = 0xFFea71fd;
+		bg.screenCenter();
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.updateHitbox();
+		add(bg);
 
-			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x337F7F7F, 0x0));
-			grid.velocity.set(20, 20);
-			grid.alpha = 0;
-			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
-			add(grid);
-		}
-		else
-		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-			bg.color = 0xFFea71fd;
-			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			bg.updateHitbox();
-			add(bg);
-
-			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
-			grid.velocity.set(20, 20);
-			grid.alpha = 0;
-			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
-			add(grid);
-		}
+		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+		grid.velocity.set(20, 20);
+		grid.alpha = 0;
+		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+		add(grid);
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);

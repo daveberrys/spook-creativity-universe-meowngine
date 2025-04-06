@@ -59,10 +59,7 @@ class SelectThing extends MusicBeatState
 		// FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic), "shared"), 0);
 		// FlxG.sound.music.fadeIn(4, 0, 0.7);
 
-		if (ClientPrefs.moveCreditMods)
-			options = ['Universe Options', 'Psych Options', 'Mods', 'Credits'];
-		else
-			options = ['Universe Options', 'Psych Options'];
+		options = ['Universe Options', 'Psych Options'];
 
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
@@ -71,36 +68,18 @@ class SelectThing extends MusicBeatState
 
 		DiscordClient.changePresence("Selecting options category", null);
 
-		if (ClientPrefs.darkmode)
-		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("aboutMenu", "preload"));
-			bg.color = 0xFFea71fd;
-			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			bg.updateHitbox();
-			add(bg);
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg.color = 0xFFea71fd;
+		bg.screenCenter();
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.updateHitbox();
+		add(bg);
 
-			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x337F7F7F, 0x0));
-			grid.velocity.set(20, 20);
-			grid.alpha = 0;
-			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
-			add(grid);
-		}
-		else
-		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-			bg.color = 0xFFea71fd;
-			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			bg.updateHitbox();
-			add(bg);
-
-			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
-			grid.velocity.set(20, 20);
-			grid.alpha = 0;
-			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
-			add(grid);
-		}
+		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+		grid.velocity.set(20, 20);
+		grid.alpha = 0;
+		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+		add(grid);
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -155,25 +134,12 @@ class SelectThing extends MusicBeatState
 					LoadingState.loadAndSwitchState(new PlayState());
 					FlxG.sound.music.volume = 0;
 				}
-				else if (ClientPrefs.fm)
-				{
-					MusicBeatState.switchState(new CoolMenuState());
-				}
-				else
-				{
-					MusicBeatState.switchState(new MainMenuState());
-				}
+				MusicBeatState.switchState(new MainMenuState());
 			}
 			if (controls.ACCEPT)
 			{
 				openSelectedSubstate(options[curSelected]);
 			}
-		}
-
-		if (FlxG.keys.justPressed.TAB)
-		{
-			ShortcutMenuSubState.inShortcutMenu = true;
-			openSubState(new ShortcutMenuSubState());
 		}
 	}
 

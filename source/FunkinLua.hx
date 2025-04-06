@@ -223,7 +223,7 @@ class FunkinLua
 		set('currentModDirectory', Paths.currentModDirectory);
 
 		// UE optiosn
-		set('universeEngine', ClientPrefs.universeEngineCPREF); // this is to check if you running universe engine!
+		/*set('universeEngine', ClientPrefs.universeEngineCPREF); // this is to check if you running universe engine!
 		set('UEkeystrokes', ClientPrefs.keystrokes);
 		set('UEkeyA', ClientPrefs.keyA);
 		set('UEkeyFT', ClientPrefs.keyFT);
@@ -249,7 +249,7 @@ class FunkinLua
 		set('UEir', ir);
 		set('UEstrumsplash', ClientPrefs.uess);
 		set('UEresultscreen', ClientPrefs.ueresultscreen);
-		set('UEmisssounds', ClientPrefs.uems);
+		set('UEmisssounds', ClientPrefs.uems);*/
 
 		// UE gamepler
 		set('UEhealthDrain', ClientPrefs.gameplaySettings.get('hd'));
@@ -1944,18 +1944,11 @@ class FunkinLua
 				CustomFadeTransition.nextCamera = null;
 
 			if (PlayState.isStoryMode)
-				if (ClientPrefs.fm)
-				{
-					MusicBeatState.switchState(new CoolStoryState());
-				}
-				else
-				{
-					MusicBeatState.switchState(new StoryMenuState());
-				}
+				MusicBeatState.switchState(new StoryMenuState());
 			else
 				MusicBeatState.switchState(new FreeplayState());
 
-			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+			FlxG.sound.playMusic(Paths.music("freakyMenu"));
 			PlayState.changedDifficulty = false;
 			PlayState.chartingMode = false;
 			PlayState.instance.transitioning = true;

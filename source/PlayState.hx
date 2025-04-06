@@ -76,7 +76,6 @@ import sys.io.File;
 #if VIDEOS_ALLOWED
 import vlc.MP4Handler;
 #end
-
 import hxwindowmode.WindowColorMode;
 
 using StringTools;
@@ -289,11 +288,10 @@ class PlayState extends MusicBeatState
 
 	public var scoreTxt:FlxText;
 
-	//scrapped
-	//public var UEscoreTxt:FlxText;
-	//public var UEmissesTxt:FlxText;
-	//public var UEratingTxt:FlxText;
-	
+	// scrapped
+	// public var UEscoreTxt:FlxText;
+	// public var UEmissesTxt:FlxText;
+	// public var UEratingTxt:FlxText;
 	public var lerpScore:Int = 0;
 
 	var timeTxt:FlxText;
@@ -1211,16 +1209,8 @@ class PlayState extends MusicBeatState
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		healthBarBG.sprTracker = healthBar;
-		if (ClientPrefs.lhpbgb)
-		{
-			add(healthBarBG);
-			add(healthBar);
-		}
-		else
-		{
-			add(healthBar);
-			add(healthBarBG);
-		}
+		add(healthBar);
+		add(healthBarBG);
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
@@ -1442,7 +1432,7 @@ class PlayState extends MusicBeatState
 
 		// PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
 		if (ClientPrefs.hitsoundVolume > 0)
-			precacheList.set('hitsound-${ClientPrefs.ht}', 'sound');
+			precacheList.set('hitsound', 'sound');
 		precacheList.set('missnote1', 'sound');
 		precacheList.set('missnote2', 'sound');
 		precacheList.set('missnote3', 'sound');
@@ -4431,21 +4421,14 @@ class PlayState extends MusicBeatState
 				if (storyPlaylist.length <= 0)
 				{
 					WeekData.loadTheFirstEnabledMod();
-					FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+					FlxG.sound.playMusic(Paths.music("freakyMenu"));
 
 					cancelMusicFadeTween();
 					if (FlxTransitionableState.skipNextTransIn)
 					{
 						CustomFadeTransition.nextCamera = null;
 					}
-					if (ClientPrefs.fm)
-					{
-						LoadingState.loadAndSwitchState(new CoolStoryState());
-					}
-					else
-					{
-						MusicBeatState.switchState(new StoryMenuState());
-					}
+					MusicBeatState.switchState(new StoryMenuState());
 
 					// if ()
 					if (!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false))
@@ -4512,7 +4495,7 @@ class PlayState extends MusicBeatState
 					CustomFadeTransition.nextCamera = null;
 				}
 				MusicBeatState.switchState(new FreeplayState());
-				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+				FlxG.sound.playMusic(Paths.music("freakyMenu"));
 				changedDifficulty = false;
 			}
 			transitioning = true;
@@ -5110,10 +5093,10 @@ class PlayState extends MusicBeatState
 
 			/*boyfriend.stunned = true;
 	
-																																		// get stunned for 1/60 of a second, makes you able to
-																																		new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
-																																		{
-																																			boyfriend.stunned = false;
+																																								// get stunned for 1/60 of a second, makes you able to
+																																								new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
+																																								{
+																																									boyfriend.stunned = false;
 			});*/
 
 			if (boyfriend.hasMissAnimations)
@@ -5195,9 +5178,9 @@ class PlayState extends MusicBeatState
 			if (cpuControlled && (note.ignoreNote || note.hitCausesMiss))
 				return;
 
-			if (ClientPrefs.hitsoundVolume > 0 && !note.hitsoundDisabled && ClientPrefs.ht != "Baldi")
+			if (ClientPrefs.hitsoundVolume > 0 && !note.hitsoundDisabled)
 			{
-				FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+				FlxG.sound.play(Paths.sound("hitsound"), ClientPrefs.hitsoundVolume);
 			}
 
 			if (note.hitCausesMiss)
@@ -5311,43 +5294,43 @@ class PlayState extends MusicBeatState
 	}
 
 	/*public function spawnNoteSplashOnNote(note:Note)
-									{
-										if (ClientPrefs.noteSplashes && note != null)
-										{
-											var strum:StrumNote = playerStrums.members[note.noteData];
-											if (strum != null)
 											{
-												spawnNoteSplash(strum.x, strum.y, note.noteData, note);
+												if (ClientPrefs.noteSplashes && note != null)
+												{
+													var strum:StrumNote = playerStrums.members[note.noteData];
+													if (strum != null)
+													{
+														spawnNoteSplash(strum.x, strum.y, note.noteData, note);
+													}
+												}
 											}
-										}
-									}
 	
-									public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null)
-									{
-										var skin:String = 'noteSplashes';
-										if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
-											skin = PlayState.SONG.splashSkin;
-	
-										var hue:Float = 0;
-										var sat:Float = 0;
-										var brt:Float = 0;
-										if (data > -1 && data < ClientPrefs.arrowHSV.length)
-										{
-											hue = ClientPrefs.arrowHSV[data][0] / 360;
-											sat = ClientPrefs.arrowHSV[data][1] / 100;
-											brt = ClientPrefs.arrowHSV[data][2] / 100;
-											if (note != null)
+											public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null)
 											{
-												skin = note.noteSplashTexture;
-												hue = note.noteSplashHue;
-												sat = note.noteSplashSat;
-												brt = note.noteSplashBrt;
-											}
-										}
+												var skin:String = 'noteSplashes';
+												if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
+													skin = PlayState.SONG.splashSkin;
 	
-										var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-										splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
-										grpNoteSplashes.add(splash);
+												var hue:Float = 0;
+												var sat:Float = 0;
+												var brt:Float = 0;
+												if (data > -1 && data < ClientPrefs.arrowHSV.length)
+												{
+													hue = ClientPrefs.arrowHSV[data][0] / 360;
+													sat = ClientPrefs.arrowHSV[data][1] / 100;
+													brt = ClientPrefs.arrowHSV[data][2] / 100;
+													if (note != null)
+													{
+														skin = note.noteSplashTexture;
+														hue = note.noteSplashHue;
+														sat = note.noteSplashSat;
+														brt = note.noteSplashBrt;
+													}
+												}
+	
+												var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+												splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
+												grpNoteSplashes.add(splash);
 	}*/
 	var fastCarCanDrive:Bool = true;
 

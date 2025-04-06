@@ -144,17 +144,17 @@ class TitleState extends MusicBeatState
 		FlxG.keys.preventDefaultKeys = [TAB];
 
 		PlayerSettings.init();
-		
+
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 		unWackyourwacky = FlxG.random.getObject(getUETextShit());
-		
+
 		// DEBUG BULLSHIT
-		
+
 		swagShader = new ColorSwap();
 		super.create();
-		
-		FlxG.save.bind('funkin', 'universe');
-		
+
+		FlxG.save.bind('funkin', 'spook');
+
 		ClientPrefs.loadPrefs();
 		WindowColorMode.setWindowBorderColor(ClientPrefs.windowColor, true, true);
 		WindowColorMode.redrawWindowHeader();
@@ -163,14 +163,6 @@ class TitleState extends MusicBeatState
 
 		// IGNORE THIS!!!
 		titleJSON = Json.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));
-		if (ClientPrefs.mmm == "DNB Old")
-			titleJSON = Json.parse(Paths.getTextFromFile('images/bpmchange/DNB.json'));
-		else if (ClientPrefs.mmm == "Stay Funky")
-			titleJSON = Json.parse(Paths.getTextFromFile('images/bpmchange/Stay-Funky.json'));
-		else if (ClientPrefs.mmm == "Marked Engine")
-			titleJSON = Json.parse(Paths.getTextFromFile('images/bpmchange/Marked.json'));
-		else if (ClientPrefs.mmm == "Daveberry")
-			titleJSON = Json.parse(Paths.getTextFromFile('images/bpmchange/Daveberry.json'));
 		#if TITLE_SCREEN_EASTER_EGG
 		if (FlxG.save.data.psychDevsEasterEgg == null)
 			FlxG.save.data.psychDevsEasterEgg = ''; // Crash prevention
@@ -218,12 +210,6 @@ class TitleState extends MusicBeatState
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new FlashingState());
-		}
-		else if (FlxG.save.data.officialLauncher == null && !OfficialLauncherState.leftState) // Thing Remove popup officlal launcher
-		{
-			FlxTransitionableState.skipNextTransIn = true;
-			FlxTransitionableState.skipNextTransOut = true;
-			MusicBeatState.switchState(new OfficialLauncherState()); // comment this line if you wanna remove the officiallauncherstate!
 		}
 		else
 		{
@@ -284,65 +270,20 @@ class TitleState extends MusicBeatState
 
 			if (FlxG.sound.music == null)
 			{
-				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0);
+				FlxG.sound.playMusic(Paths.music("freakyMenu"), 0);
 			}
 		}
 
 		Conductor.changeBPM(titleJSON.bpm);
 		persistentUpdate = true;
 
-		if (ClientPrefs.mmm != "AAC V4" && ClientPrefs.mmm != "Normal Collections")
-		{
-			if (ClientPrefs.darkmode)
-			{
-				bg = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
-				bg.color = 0xFFFDE871;
-				bg.antialiasing = ClientPrefs.globalAntialiasing;
-				bg.setGraphicSize(Std.int(bg.width * 2));
-				bg.updateHitbox();
-				bg.screenCenter();
-				add(bg);
-				bg.shader = swagShader.shader;
-			}
-			else
-			{
-				bg = new FlxSprite(0, 0).loadGraphic(Paths.image('menuBG'));
-				bg.antialiasing = ClientPrefs.globalAntialiasing;
-				bg.setGraphicSize(Std.int(bg.width * 2));
-				bg.updateHitbox();
-				bg.screenCenter();
-				add(bg);
-				bg.shader = swagShader.shader;
-			}
+		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
+		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 
-			logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
-			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
-
-			logoBl.antialiasing = ClientPrefs.globalAntialiasing;
-			logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
-			logoBl.animation.play('bump');
-			logoBl.updateHitbox();
-			if (ClientPrefs.ft)
-			{
-				logoBl.y = FlxG.height / 2 - 450;
-				logoBl.screenCenter(X);
-				logoBl.scale.set(1.1, 1.1);
-			}
-		}
-
-		if (ClientPrefs.mmm == "Normal Collections")
-		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('title/bg/bg-' + FlxG.random.int(1, 5)));
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			bg.screenCenter();
-			add(bg);
-
-			pRESSENTERTOBEGIN = new FlxSprite().loadGraphic(Paths.image('title/PRESSENTERTOBEGIN'));
-			yOUR = new FlxSprite().loadGraphic(Paths.image('title/YOUR'));
-			nORMAL = new FlxSprite().loadGraphic(Paths.image('title/NORMAL'));
-			cOLLECTIONS = new FlxSprite().loadGraphic(Paths.image('title/COLLECTIONS'));
-			mOD = new FlxSprite().loadGraphic(Paths.image('title/MOD'));
-		}
+		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
+		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
+		logoBl.animation.play('bump');
+		logoBl.updateHitbox();
 
 		// logoBl.color = FlxColor.BLACK;
 
@@ -382,133 +323,12 @@ class TitleState extends MusicBeatState
 				gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		}
-		if (ClientPrefs.mmm != "AAC V4" && ClientPrefs.mmm != "Normal Collections")
-		{
-			gfDance.antialiasing = ClientPrefs.globalAntialiasing;
-			if (ClientPrefs.ft == true)
-			{
-				gfDance.screenCenter(X);
-				gfDance.y = FlxG.height / 2 - 200;
-				gfDance.scale.set(0.75, 0.75);
-			}
-			if (ClientPrefs.ft == true)
-			{
-				var fancyBG:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('universeBanner'));
-				fancyBG.updateHitbox();
-				fancyBG.screenCenter();
-				fancyBG.antialiasing = ClientPrefs.globalAntialiasing;
-				fancyBG.setGraphicSize(Std.int(fancyBG.width * 1.175));
-				add(fancyBG);
-			}
+		gfDance.antialiasing = ClientPrefs.globalAntialiasing;
 
-			logoBl.shader = swagShader.shader;
-			if (ClientPrefs.ft == true)
-			{
-				var darkBG:FlxSprite = new FlxSprite(0, 0);
-				darkBG.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-				darkBG.alpha = 0.5;
-				darkBG.screenCenter();
-				add(darkBG);
-
-				var fancyLogoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
-				fancyLogoBl.frames = Paths.getSparrowAtlas('logoBumpin');
-				fancyLogoBl.antialiasing = ClientPrefs.globalAntialiasing;
-				fancyLogoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
-				fancyLogoBl.animation.play('bump');
-				fancyLogoBl.updateHitbox();
-				fancyLogoBl.screenCenter(X);
-				logoBl.y = FlxG.height / 2 - 450;
-				add(fancyLogoBl);
-				fancyLogoBl.alpha = 0;
-				fancyLogoBl.shader = swagShader.shader;
-			}
-			add(logoBl);
-			add(gfDance);
-			gfDance.shader = swagShader.shader;
-		}
-
-		if (ClientPrefs.mmm == "AAC V4")
-		{
-			bg = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/introBG'));
-			bg.updateHitbox();
-			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			bg.setGraphicSize(Std.int(bg.width * 1.175));
-			add(bg);
-
-			blackDots = new FlxBackdrop(Paths.image("blackDots"), X);
-			blackDots.antialiasing = ClientPrefs.globalAntialiasing;
-			blackDots.setGraphicSize(Std.int(1280 * 1.04));
-			blackDots.updateHitbox();
-			blackDots.screenCenter();
-			blackDots.velocity.set(30, 0);
-			blackDots.alpha = 0; // 0.3
-			blackDots.y += 125;
-			add(blackDots);
-
-			fnf = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/FNF'));
-			fnf.updateHitbox();
-			fnf.screenCenter(X);
-			fnf.y = FlxG.height / 2 - 370;
-			fnf.antialiasing = ClientPrefs.globalAntialiasing;
-
-			anammar = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/An Ammar'));
-			anammar.updateHitbox();
-			anammar.screenCenter(X);
-			anammar.y = FlxG.height / 2 - 360;
-			anammar.antialiasing = ClientPrefs.globalAntialiasing;
-
-			creativity = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/Creativity'));
-			creativity.updateHitbox();
-			creativity.screenCenter(X);
-			creativity.y = FlxG.height / 2 - 350;
-			creativity.antialiasing = ClientPrefs.globalAntialiasing;
-
-			add(fnf);
-			add(anammar);
-			add(creativity);
-			fnf.scale.set(3, 3);
-			anammar.scale.set(3, 3);
-			creativity.scale.set(3, 3);
-		}
-
-		if (ClientPrefs.mmm == "Normal Collections")
-		{
-			grid = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
-			grid.velocity.set(40, 20);
-			grid.alpha = 0;
-			FlxTween.tween(grid, {alpha: 0.5}, 2, {ease: FlxEase.linear});
-			add(grid);
-			// funny
-			daveberry = new FlxBackdrop(Paths.image("title/daveberry"));
-			daveberry.alpha = 0.1;
-			daveberry.color = 0xFF008BFF;
-			daveberry.velocity.set(25, -25);
-			// add(daveberry);
-
-			square1 = new FlxBackdrop(Paths.image("title/SQUARE"));
-			square1.alpha = 0.25;
-			square1.velocity.set(0, 50);
-			add(square1);
-
-			square2 = new FlxBackdrop(Paths.image("title/SQUARE"));
-			square2.angle = 180;
-			square2.alpha = 0.25;
-			square2.velocity.set(0, -50);
-			add(square2);
-
-			pRESSENTERTOBEGIN.y = 1000;
-			yOUR.y = 1000;
-			nORMAL.y = 1000;
-			cOLLECTIONS.y = 1000;
-			mOD.y = 1000;
-
-			add(pRESSENTERTOBEGIN);
-			add(yOUR);
-			add(nORMAL);
-			add(cOLLECTIONS);
-			add(mOD);
-		}
+		logoBl.shader = swagShader.shader;
+		add(logoBl);
+		add(gfDance);
+		gfDance.shader = swagShader.shader;
 
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
 		#if (desktop && MODS_ALLOWED)
@@ -554,10 +374,7 @@ class TitleState extends MusicBeatState
 		titleText.updateHitbox();
 		titleText.x = titleText.x + 25;
 		// titleText.screenCenter(X);
-		if (ClientPrefs.mmm != "Normal Collections")
-		{
-			add(titleText);
-		}
+		add(titleText);
 
 		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
 		logo.screenCenter();
@@ -654,35 +471,6 @@ class TitleState extends MusicBeatState
 		}
 		#end
 
-		if (ClientPrefs.mmm == "AAC V4")
-		{
-			if (logoCanBeat)
-			{
-				var fnfsizeLerp:Float = FlxMath.lerp(fnf.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
-				var ansizeLerp:Float = FlxMath.lerp(anammar.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
-				var crsizeLerp:Float = FlxMath.lerp(creativity.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
-				fnf.scale.set(fnfsizeLerp, fnfsizeLerp);
-				anammar.scale.set(ansizeLerp, ansizeLerp);
-				creativity.scale.set(crsizeLerp, crsizeLerp);
-			}
-		}
-		if (ClientPrefs.mmm == "Normal Collections")
-		{
-			if (logoCanBeat)
-			{
-				var pRESSENTERTOBEGINsizeLerp:Float = FlxMath.lerp(pRESSENTERTOBEGIN.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
-				var yOURsizeLerp:Float = FlxMath.lerp(yOUR.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
-				var nORMALsizeLerp:Float = FlxMath.lerp(nORMAL.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
-				var cOLLECTIONSsizeLerp:Float = FlxMath.lerp(cOLLECTIONS.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
-				var mODsizeLerp:Float = FlxMath.lerp(mOD.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
-
-				pRESSENTERTOBEGIN.scale.set(pRESSENTERTOBEGINsizeLerp, pRESSENTERTOBEGINsizeLerp);
-				yOUR.scale.set(yOURsizeLerp, yOURsizeLerp);
-				nORMAL.scale.set(nORMALsizeLerp, nORMALsizeLerp);
-				cOLLECTIONS.scale.set(cOLLECTIONSsizeLerp, cOLLECTIONSsizeLerp);
-				mOD.scale.set(mODsizeLerp, mODsizeLerp);
-			}
-		}
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
 		if (gamepad != null)
@@ -733,25 +521,9 @@ class TitleState extends MusicBeatState
 				transitioning = true;
 				// FlxG.sound.music.stop();
 
-				if (ClientPrefs.mmm == "Normal Collections")
-				{
-					FlxTween.tween(pRESSENTERTOBEGIN, {y: 1500}, 2, {ease: FlxEase.backInOut, startDelay: 0.05});
-					FlxTween.tween(yOUR, {y: 1500}, 2, {ease: FlxEase.backInOut, startDelay: 0.1});
-					FlxTween.tween(nORMAL, {y: 1500}, 2, {ease: FlxEase.backInOut, startDelay: 0.15});
-					FlxTween.tween(cOLLECTIONS, {y: 1500}, 2, {ease: FlxEase.backInOut, startDelay: 0.2});
-					FlxTween.tween(mOD, {y: 1500}, 2, {ease: FlxEase.backInOut, startDelay: 0.25});
-				}
-
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
-					if (ClientPrefs.fm)
-					{
-						MusicBeatState.switchState(new CoolMenuState());
-					}
-					else
-					{
-						MusicBeatState.switchState(new MainMenuState());
-					}
+					MusicBeatState.switchState(new MainMenuState());
 					closedState = true;
 				});
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
@@ -816,17 +588,12 @@ class TitleState extends MusicBeatState
 			skipIntro();
 		}
 
-		if (swagShader != null && ClientPrefs.ft == false)
+		if (swagShader != null)
 		{
 			if (controls.UI_LEFT)
 				swagShader.hue -= elapsed * 0.1;
 			if (controls.UI_RIGHT)
 				swagShader.hue += elapsed * 0.1;
-		}
-
-		if (ClientPrefs.ft && ClientPrefs.mmm != "AAC V4" && ClientPrefs.mmm != "Normal Collections")
-		{
-			swagShader.hue += elapsed * 0.1;
 		}
 
 		super.update(elapsed);
@@ -888,149 +655,58 @@ class TitleState extends MusicBeatState
 				gfDance.animation.play('danceLeft');
 		}
 
-		if (ClientPrefs.mmm == "AAC V4")
-		{
-			if (logoCanBeat)
-			{
-				fnf.scale.set(1.06, 1.06);
-				anammar.scale.set(1.1, 1.1);
-				creativity.scale.set(1.13, 1.13);
-			}
-		}
-		if (ClientPrefs.mmm == "Normal Collections")
-		{
-			if (logoCanBeat)
-			{
-				pRESSENTERTOBEGIN.scale.set(1.16 + 0.06, 1.16 + 0.06);
-				yOUR.scale.set(1.06 + 0.03, 1.06 + 0.03);
-				nORMAL.scale.set(1.1 + 0.03, 1.1 + 0.03);
-				cOLLECTIONS.scale.set(1.13 + 0.03, 1.13 + 0.03);
-				mOD.scale.set(1.16 + 0.03, 1.16 + 0.03);
-			}
-		}
-		if (skippedIntro)
-		{
-			if (ClientPrefs.mmm == "Normal Collections")
-			{
-				FlxTween.tween(FlxG.camera, {angle: curBeat % 2 == 0 ? 2 : -2}, 1, {ease: FlxEase.expoOut, type: BACKWARD});
-				FlxTween.tween(FlxG.camera, {zoom: 1.125}, 1, {ease: FlxEase.expoOut, type: BACKWARD});
-			}
-			if (ClientPrefs.mmm == "AAC V4")
-			{
-				FlxTween.tween(FlxG.camera, {zoom: 1.025}, 1, {ease: FlxEase.expoOut, type: BACKWARD});
-			}
-		}
-		else
-		{
-			FlxTween.tween(FlxG.camera, {zoom: 1});
-			FlxTween.tween(FlxG.camera, {angle: 0});
-		}
-
 		if (!closedState)
 		{
 			sickBeats++;
-			if (ClientPrefs.mmm != "AAC V4" && ClientPrefs.mmm != 'Stay Funky')
+			switch (sickBeats)
 			{
-				switch (sickBeats)
-				{
-					case 1:
-						// FlxG.sound.music.stop();
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0);
-						FlxG.sound.music.fadeIn(4, 0, 0.7);
-					case 2:
-						createCoolText(['Universe Engine'], 15);
-					// credTextShit.visible = true;
-					case 3:
-						addMoreText('By', 15);
-					case 4:
-						addMoreText('uwenalil', 15);
-						addMoreText('VideoBot', 15);
-						addMoreText('BaranMuzu', 15);
-					case 5:
-						deleteCoolText();
-					case 6:
-						createCoolText(['Psych Engine'], 15);
-					case 7:
-						addMoreText('By', 15);
-					case 8:
-						addMoreText('Shadow Mario', 15);
-						addMoreText('RiverOaken', 15);
-						addMoreText('shubs', 15);
-					case 9:
-						deleteCoolText();
-						ngSpr.visible = false;
-					case 10:
-						addMoreText(curWacky[0]);
-					case 11:
-						addMoreText(curWacky[1]);
-					case 12:
-						addMoreText(curWacky[2]);
-					case 13:
-						deleteCoolText();
-						addMoreText('Friday', -40);
-					case 14:
-						addMoreText('Night', -40);
-					case 15:
-						addMoreText("Funkin'", -40);
-					case 16:
-						addMoreText(unWackyourwacky[0], -20); // credTextShit.text += '\nFunkin';
-						addMoreText(unWackyourwacky[1], -20);
-						addMoreText(unWackyourwacky[2], -20);
-						addMoreText(unWackyourwacky[3], -20);
-						addMoreText(unWackyourwacky[4], -20);
-					case 17:
-						skipIntro();
-				}
-			}
-			else if (ClientPrefs.mmm != "Stay Funky")
-			{
-				switch (sickBeats)
-				{
-					case 1:
-						#if !html5
-						var video:MP4Handler = new MP4Handler();
-						video.playVideo("assets/videos/AACIntroUE.mp4");
-						#end
-
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0);
-						FlxG.sound.music.fadeIn(4, 0, 0.7);
-					case 33:
-						skipIntro();
-				}
-			}
-			else if (ClientPrefs.mmm != "AAC V4" && ClientPrefs.mmm == 'Stay Funky')
-			{
-				switch (sickBeats)
-				{
-					case 1:
-						// FlxG.sound.music.stop();
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0);
-						FlxG.sound.music.fadeIn(4, 0, 0.7);
-						createCoolText(['Universe Engine'], 15);
-						addMoreText('By', 15);
-						addMoreText('uwenalil', 15);
-						addMoreText('VideoBot', 15);
-						addMoreText('BaranMuzu', 15);
-					case 3:
-						deleteCoolText();
-						createCoolText(['Psych Engine'], -40);
-						addMoreText('By', -40);
-						addMoreText('ShadowMario', -40);
-						ngSpr.visible = true;
-					case 6:
-						deleteCoolText();
-						ngSpr.visible = false;
-						addMoreText(curWacky[0], -20);
-					case 7:
-						addMoreText(curWacky[1], -20);
-					case 8:
-						addMoreText(curWacky[2], -20);
-					case 9:
-						addMoreText('Friday Night');
-						addMoreText("Funkin'");
-					case 10:
-						skipIntro();
-				}
+				case 1:
+					// FlxG.sound.music.stop();
+					FlxG.sound.playMusic(Paths.music("freakyMenu"), 0);
+					FlxG.sound.music.fadeIn(4, 0, 0.7);
+				case 2:
+					createCoolText(['Universe Engine'], 15);
+				// credTextShit.visible = true;
+				case 3:
+					addMoreText('By', 15);
+				case 4:
+					addMoreText('uwenalil', 15);
+					addMoreText('VideoBot', 15);
+					addMoreText('BaranMuzu', 15);
+				case 5:
+					deleteCoolText();
+				case 6:
+					createCoolText(['Psych Engine'], 15);
+				case 7:
+					addMoreText('By', 15);
+				case 8:
+					addMoreText('Shadow Mario', 15);
+					addMoreText('RiverOaken', 15);
+					addMoreText('shubs', 15);
+				case 9:
+					deleteCoolText();
+					ngSpr.visible = false;
+				case 10:
+					addMoreText(curWacky[0]);
+				case 11:
+					addMoreText(curWacky[1]);
+				case 12:
+					addMoreText(curWacky[2]);
+				case 13:
+					deleteCoolText();
+					addMoreText('Friday', -40);
+				case 14:
+					addMoreText('Night', -40);
+				case 15:
+					addMoreText("Funkin'", -40);
+				case 16:
+					addMoreText(unWackyourwacky[0], -20); // credTextShit.text += '\nFunkin';
+					addMoreText(unWackyourwacky[1], -20);
+					addMoreText(unWackyourwacky[2], -20);
+					addMoreText(unWackyourwacky[3], -20);
+					addMoreText(unWackyourwacky[4], -20);
+				case 17:
+					skipIntro();
 			}
 		}
 	}
@@ -1042,22 +718,6 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
-			if (ClientPrefs.mmm == "AAC V4")
-			{
-				FlxTween.tween(bg, {y: ((720 / 2) - (bg.height / 2))}, 1, {ease: FlxEase.expoOut, startDelay: 0.4});
-				FlxTween.tween(fnf, {"scale.x": 1, "scale.y": 1, alpha: 1}, 1, {ease: FlxEase.expoOut, startDelay: 0.3});
-				FlxTween.tween(anammar, {"scale.x": 1, "scale.y": 1, alpha: 1}, 1, {ease: FlxEase.expoOut, startDelay: 0.4});
-				FlxTween.tween(creativity, {"scale.x": 1, "scale.y": 1, alpha: 1}, 1, {ease: FlxEase.expoOut, startDelay: 0.5});
-				FlxTween.tween(blackDots, {alpha: 0.3}, 1, {ease: FlxEase.quadOut, startDelay: 0.6});
-			}
-			if (ClientPrefs.mmm == "Normal Collections")
-			{
-				FlxTween.tween(pRESSENTERTOBEGIN, {y: 0}, 2, {ease: FlxEase.backOut});
-				FlxTween.tween(yOUR, {y: 0}, 2.1, {ease: FlxEase.backOut});
-				FlxTween.tween(nORMAL, {y: 0}, 2.15, {ease: FlxEase.backOut});
-				FlxTween.tween(cOLLECTIONS, {y: 0}, 2.2 /*gd refernce?!??!*/, {ease: FlxEase.backOut});
-				FlxTween.tween(mOD, {y: 0}, 2.25, {ease: FlxEase.backOut});
-			}
 			if (playJingle) // Ignore deez
 			{
 				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
@@ -1084,7 +744,7 @@ class TitleState extends MusicBeatState
 						skippedIntro = true;
 						playJingle = false;
 
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0);
+						FlxG.sound.playMusic(Paths.music("freakyMenu"), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
 						return;
 				}
@@ -1107,7 +767,7 @@ class TitleState extends MusicBeatState
 					FlxG.camera.flash(FlxColor.WHITE, 3);
 					sound.onComplete = function()
 					{
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0);
+						FlxG.sound.playMusic(Paths.music("freakyMenu"), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
 						transitioning = false;
 					};
@@ -1134,27 +794,6 @@ class TitleState extends MusicBeatState
 					}
 				}
 				#end
-			}
-			if (ClientPrefs.mmm == "AAC V4")
-			{
-				var timer:FlxTimer = new FlxTimer().start(1.5, function(tmr:FlxTimer)
-				{
-					logoCanBeat = true;
-					fnf.origin.y = 283;
-					anammar.origin.y = 283;
-					creativity.origin.y = 283;
-				});
-			}
-			if (ClientPrefs.mmm == "Normal Collections")
-			{
-				var timer:FlxTimer = new FlxTimer().start(1.5, function(tmr:FlxTimer)
-				{
-					logoCanBeat = true;
-					yOUR.origin.y = 283;
-					nORMAL.origin.y = 283;
-					cOLLECTIONS.origin.y = 283;
-					mOD.origin.y = 283;
-				});
 			}
 			skippedIntro = true;
 		}
